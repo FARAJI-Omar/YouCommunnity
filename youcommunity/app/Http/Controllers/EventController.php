@@ -16,6 +16,11 @@ class EventController extends Controller
         return view('events.index', compact('events'));
     }
 
+    public function homePageEvents(){
+        $events = Event::all();
+        return view('dashboard', compact('events'));
+    }
+
     public function create()
     {
         return view('events.create');

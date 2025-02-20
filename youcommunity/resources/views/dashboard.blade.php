@@ -1,17 +1,55 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+        {{-- <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Dashboard') }}
-        </h2>
+        </h2> --}}
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    {{ __("You're logged in!") }}
+    <div style="display: flex; flex-direction: column; justify-content: center; align-items: center">
+            <img src="{{ asset('images/events.jpg') }}" style="width: 95%; height: 450px; border-radius: 5px; opacity:0.65">
+    </div>
+
+    {{-- events cards --}}
+    <div style="display: flex; gap: 90px; justify-content: center; flex-wrap: wrap; padding: 20px; margin-top: 60px">
+    @foreach ($events->take(3) as $event)
+
+        <!-- Event Card 1 -->
+        <div style="width: 400px; background-color: white; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); overflow: hidden;">
+            <!-- Div 1: Image of the event -->
+            <div style="position: relative;">
+                <img src="{{ asset('images/event-image.jpg')}}" alt="Event Image" style="width: 100%; height: 150px; object-fit: cover;">
+            </div>
+
+            <!-- Div 2: Event details -->
+            <div style="padding: 16px;">
+                <div style="display: flex;">
+                    <!-- Left div: Date of event -->
+                    <div style="width: 25%; text-align: center; background-color: #f3f4f6; padding: 8px; border-radius: 8px;">
+                        <p style="font-size: 18px; font-weight: bold; color: #3b82f6;">{{ \Carbon\Carbon::parse($event->event_date)->format('M d') }}</p>
+                        <p style="font-size: 14px; color: #6b7280;">{{ \Carbon\Carbon::parse($event->event_date)->format('H:i') }}</p>
+                    </div>
+
+                    <!-- Right div: Event info -->
+                    <div style="width: 75%; padding-left: 16px;">
+                        <h3 style="font-size: 20px; font-weight: bold; color: #374151;">{{$event->title}}</h3>
+                        <p style="font-size: 14px; color: #6b7280; margin-top: 8px;">{{$event->location}}</p>
+                        <p style="font-size: 14px; color: #6b7280; margin-top: 4px;">Category: Social</p>
+                        <p style="font-size: 14px; color: #6b7280; margin-top: 4px;">Max Participants: {{$event->max_participants}}</p>
+                        <p style="font-size: 14px; color: #6b7280; margin-top: 4px;">Created by: {{$event->user->name}}</p>
+                    </div>
                 </div>
             </div>
+
+            <!-- Div 3: Participate button -->
+            <div style="padding: 16px;">
+                <button style="width: 100%; background-color: #3b82f6; color: white; padding: 12px; border-radius: 8px; border: none; cursor: pointer; font-size: 16px;">
+                    Participate
+                </button>
+            </div>
         </div>
-    </div>
+
+    @endforeach
+</div>
+
+    
 </x-app-layout>
