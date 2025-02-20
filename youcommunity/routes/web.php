@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Route;
 // Changed route to ensure $events variable is defined
 Route::get('/', [EventController::class, 'homePageEvents']);
 
-Route::get('/dashboard', [EventController::class, 'homePageEvents'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [EventController::class, 'homePageEvents'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -21,6 +21,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('events/my', [EventController::class, 'myEvents'])->name('events.my');
 
+    // The following resource route automatically defines the events.store route., automatically generates routes for store, update, delete, etc.
     Route::resource('events', EventController::class);
 
     Route::post('events/{event}/rsvp', [RSVPController::class, 'store'])->name('rsvp.store');

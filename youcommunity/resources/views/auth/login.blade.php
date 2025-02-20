@@ -43,5 +43,8 @@
                 {{ __('Log in') }}
             </x-primary-button>
         </div>
+            <div style="color: gray">
+                <a href="{{'register'}}">Register</a>
+            </div>
     </form>
 </x-guest-layout>

@@ -1,14 +1,13 @@
 <x-app-layout>
-    <x-slot name="header">
-        {{-- <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Dashboard') }}
-        </h2> --}}
-    </x-slot>
+    
 
-    <div style="display: flex; flex-direction: column; justify-content: center; align-items: center">
-            <img src="{{ asset('images/events.jpg') }}" style="width: 95%; height: 450px; border-radius: 5px; opacity:0.65">
+    <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; margin-top: 40px">
+        <img src="{{ asset('images/events.jpg') }}" style="width: 95%; height: 450px; border-radius: 5px; opacity:0.65">
+
+        <img src="{{ asset('images/circle-cutout.png') }}" style=" height: 300px; margin-top: 50px; margin-bottom: 100px;">
     </div>
 
+    <h1 style="justify-self: center; font-size: 30px; border-bottom: blue solid">Latest Events</h1>
     {{-- events cards --}}
     <div style="display: flex; gap: 90px; justify-content: center; flex-wrap: wrap; padding: 20px; margin-top: 60px">
     @foreach ($events->take(3) as $event)
@@ -47,9 +46,9 @@
                 </button>
             </div>
         </div>
-
     @endforeach
-</div>
+        <a href="{{'events'}}" style="justify-self: center; font-size: 20px; color:white; background-color: #7b85cf; border-radius: 5px; padding: 5px 15px">Discover More</a>
+
 
     
 </x-app-layout>
