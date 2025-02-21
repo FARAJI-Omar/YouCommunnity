@@ -33,7 +33,7 @@
                     <div style="width: 75%; padding-left: 16px;">
                         <h3 style="font-size: 20px; font-weight: bold; color: #374151;">{{$event->title}}</h3>
                         <p style="font-size: 14px; color: #6b7280; margin-top: 8px;"><b>Location</b>: {{$event->location}}</p>
-                        <p style="font-size: 14px; color: #6b7280; margin-top: 4px;"><b>Category:</b> Social</p>
+                        <p style="font-size: 14px; color: #6b7280; margin-top: 4px;"><b>Category:</b> {{$event->category}}</p>
                         <p style="font-size: 14px; color: #6b7280; margin-top: 4px;"><b>Max Participants:</b> {{$event->max_participants}}</p>
                         <p style="font-size: 12px; color: #6b7280; margin-top: 4px;">Created by: {{$event->user->name}}</p>
                     </div>

@@ -34,6 +34,7 @@ class EventController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'location' => 'required|string',
+            'category'=> 'required|string',
             'event_date' => 'required|date',
             'max_participants' => 'required|integer',
         ]);
@@ -43,6 +44,7 @@ class EventController extends Controller
             'title' => $request->title,
             'description' => $request->description,
             'location' => $request->location,
+            'category' => $request->category,
             'event_date' => $request->event_date,
             'max_participants' => $request->max_participants,
             'user_id' => auth()->id(), // Associate event with the currently logged-in user

@@ -27,8 +27,8 @@
                         <!-- Right div: Event info -->
                         <div style="width: 75%; padding-left: 16px;">
                             <h3 style="font-size: 20px; font-weight: bold; color: #374151;">{{$event->title}}</h3>
-                            <p style="font-size: 14px; color: #6b7280; margin-top: 8px;"><b>Location</b>: {{$event->location}}</p>
-                            <p style="font-size: 14px; color: #6b7280; margin-top: 4px;"><b>Category:</b> Social</p>
+                            <p style="font-size: 14px; color: #6b7280; margin-top: 8px;"><b>Location:</b> {{$event->location}}</p>
+                            <p style="font-size: 14px; color: #6b7280; margin-top: 4px;"><b>Category:</b> {{$event->category}}</p>
                             <p style="font-size: 14px; color: #6b7280; margin-top: 4px;"><b>Max Participants:</b> {{$event->max_participants}}</p>
                             <p style="font-size: 12px; color: #6b7280; margin-top: 4px;">Created by: {{$event->user->name}}</p>
                         </div>
@@ -37,8 +37,8 @@
 
                 <!-- Div 3: Participate button -->
                 <div style="padding: 16px;">
-                    <button style="width: 100%; background-color: #3b82f6; color: white; padding: 12px; border-radius: 8px; border: none; cursor: pointer; font-size: 16px;">
-                        Participate
+                    <button style="width: 100%; background-color: #7b85cfad; color: white; padding: 12px; border-radius: 8px; border: none; cursor: pointer; font-size: 16px;">
+                        Participate in this event
                     </button>
                 </div>
             </div>

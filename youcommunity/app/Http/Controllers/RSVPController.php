@@ -28,28 +28,14 @@ class RSVPController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request, $eventId)
+    public function store(Request $request, Event $event)
     {
-        $event = Event::findOrFail($eventId);
-
-    // Check if the user has already RSVPed
-    $existingRSVP = RSVP::where('user_id', auth()->id())->where('event_id', $eventId)->first();
-    if ($existingRSVP) {
-        return back()->with('error', 'You have already reserved to this event.');
-    }
-
-    // Check if there are available spots
-    if ($event->rsvps()->count() >= $event->max_participants) {
-        return back()->with('error', 'This event has reached its maximum number of participants.');
-    }
-
-    // Create RSVP
-    RSVP::create([
-        'user_id' => auth()->id(),
-        'event_id' => $eventId,
-    ]);
-
-    return back()->with('success', 'You have successfully reserved to tihs event.');
+        // Check if user already booked
+        if ($event->rsvps()->where('user_id', auth()->id())->exists()) {
+            return back()->with('error', 'You have already booked a reservation.');
+        }
+        $event->rsvps()->create(['user_id' => auth()->id()]);
+        return back()->with('success', 'Reservation booked successfully!');
     }
 
     /**
@@ -79,15 +65,13 @@ class RSVPController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($eventId)
+    public function destroy(Event $event)
     {
-        // Cancel the RSVP
-    $rsvp = RSVP::where('user_id', auth()->id())->where('event_id', $eventId)->first();
-    if ($rsvp) {
-        $rsvp->delete();
-        return back()->with('success', 'You have successfully canceled your RSVP.');
-    }
-
-    return back()->with('error', 'You have not resserved to this event.');
+        $rsvp = $event->rsvps()->where('user_id', auth()->id())->first();
+        if ($rsvp) {
+            $rsvp->delete();
+            return back()->with('success', 'Reservation cancelled successfully!');
+        }
+        return back()->with('error', 'No reservation found.');
     }
 }

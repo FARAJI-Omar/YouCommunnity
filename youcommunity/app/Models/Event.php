@@ -22,6 +22,7 @@ class Event extends Model
         'location',
         'event_date',
         'max_participants',
+        'category',
         'user_id',
     ];
 
