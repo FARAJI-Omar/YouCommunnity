@@ -12,11 +12,12 @@ class EventController extends Controller
     public function index()
     {
         // Fetch events with pagination (6 per page)
-        $events = Event::paginate(6);
+        $events = Event::paginate(9);
         return view('events.index', compact('events'));
     }
 
-    public function homePageEvents(){
+    public function homePageEvents()
+    {
         $events = Event::all();
         return view('dashboard', compact('events'));
     }
@@ -98,5 +99,12 @@ class EventController extends Controller
     {
         $events = Event::where('user_id', auth()->id())->get();
         return view('events.my.index', compact('events'));
+    }
+
+    // New method for event details accepting the event id as parameter
+    public function eventDetails($id)
+    {
+        $event = Event::findOrFail($id);
+        return view('events.EventDetails', compact('event'));
     }
 }

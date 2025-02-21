@@ -1,5 +1,5 @@
 <x-app-layout>
-    
+
 
     <div style="display: flex; flex-direction: column; justify-content: center; align-items: center; margin-top: 40px">
         <img src="{{ asset('images/events.jpg') }}" style="width: 95%; height: 450px; border-radius: 5px; opacity:0.65">
@@ -10,10 +10,11 @@
     <h1 style="justify-self: center; font-size: 30px; border-bottom: blue solid">Latest Events</h1>
     {{-- events cards --}}
     <div style="display: flex; gap: 90px; justify-content: center; flex-wrap: wrap; padding: 20px; margin-top: 60px">
-    @foreach ($events->take(3) as $event)
+        @foreach ($events->take(3) as $event)
 
-        <!-- Event Card 1 -->
-        <div style="width: 400px; background-color: white; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); overflow: hidden;">
+        <!-- Event Card  -->
+        <a href="{{ route('events.details', $event->id) }}">
+            <div style="width: 400px; background-color: white; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); overflow: hidden;">
             <!-- Div 1: Image of the event -->
             <div style="position: relative;">
                 <img src="{{ asset('images/event-image.jpg')}}" alt="Event Image" style="width: 100%; height: 150px; object-fit: cover;">
@@ -31,10 +32,10 @@
                     <!-- Right div: Event info -->
                     <div style="width: 75%; padding-left: 16px;">
                         <h3 style="font-size: 20px; font-weight: bold; color: #374151;">{{$event->title}}</h3>
-                        <p style="font-size: 14px; color: #6b7280; margin-top: 8px;">{{$event->location}}</p>
-                        <p style="font-size: 14px; color: #6b7280; margin-top: 4px;">Category: Social</p>
-                        <p style="font-size: 14px; color: #6b7280; margin-top: 4px;">Max Participants: {{$event->max_participants}}</p>
-                        <p style="font-size: 14px; color: #6b7280; margin-top: 4px;">Created by: {{$event->user->name}}</p>
+                        <p style="font-size: 14px; color: #6b7280; margin-top: 8px;"><b>Location</b>: {{$event->location}}</p>
+                        <p style="font-size: 14px; color: #6b7280; margin-top: 4px;"><b>Category:</b> Social</p>
+                        <p style="font-size: 14px; color: #6b7280; margin-top: 4px;"><b>Max Participants:</b> {{$event->max_participants}}</p>
+                        <p style="font-size: 12px; color: #6b7280; margin-top: 4px;">Created by: {{$event->user->name}}</p>
                     </div>
                 </div>
             </div>
@@ -45,10 +46,13 @@
                     Participate
                 </button>
             </div>
-        </div>
-    @endforeach
+            </div>
+        </a>
+        @endforeach
         <a href="{{'events'}}" style="justify-self: center; font-size: 20px; color:white; background-color: #7b85cf; border-radius: 5px; padding: 5px 15px">Discover More</a>
 
+    </div>
 
-    
+    @include('layouts.footer')
+
 </x-app-layout>

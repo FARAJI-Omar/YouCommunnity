@@ -35,7 +35,7 @@ class RSVPController extends Controller
     // Check if the user has already RSVPed
     $existingRSVP = RSVP::where('user_id', auth()->id())->where('event_id', $eventId)->first();
     if ($existingRSVP) {
-        return back()->with('error', 'You have already RSVPed to this event.');
+        return back()->with('error', 'You have already reserved to this event.');
     }
 
     // Check if there are available spots
@@ -49,7 +49,7 @@ class RSVPController extends Controller
         'event_id' => $eventId,
     ]);
 
-    return back()->with('success', 'You have successfully RSVPed to the event.');
+    return back()->with('success', 'You have successfully reserved to tihs event.');
     }
 
     /**
@@ -88,6 +88,6 @@ class RSVPController extends Controller
         return back()->with('success', 'You have successfully canceled your RSVP.');
     }
 
-    return back()->with('error', 'You have not RSVPed to this event.');
+    return back()->with('error', 'You have not resserved to this event.');
     }
 }

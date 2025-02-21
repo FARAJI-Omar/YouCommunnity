@@ -6,10 +6,10 @@ use App\Http\Controllers\RSVPController;
 use App\Http\Controllers\CommentController;
 use Illuminate\Support\Facades\Route;
 
-// Changed route to ensure $events variable is defined
+// Updated route to ensure $events is passed to the dashboard view
 Route::get('/', [EventController::class, 'homePageEvents']);
 
-Route::get('/dashboard', [EventController::class, 'homePageEvents'])->name('dashboard');
+Route::get('/dashboard', [EventController::class, 'homePageEvents'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -21,7 +21,6 @@ Route::middleware('auth')->group(function () {
 
     Route::get('events/my', [EventController::class, 'myEvents'])->name('events.my');
 
-    // The following resource route automatically defines the events.store route., automatically generates routes for store, update, delete, etc.
     Route::resource('events', EventController::class);
 
     Route::post('events/{event}/rsvp', [RSVPController::class, 'store'])->name('rsvp.store');
@@ -29,6 +28,8 @@ Route::middleware('auth')->group(function () {
 
     Route::post('events/{event}/comments', [CommentController::class, 'store'])->name('comments.store');
     Route::delete('comments/{comment}', [CommentController::class, 'destroy'])->name('comments.destroy');
+
+    Route::get('events/{event}/details', [EventController::class, 'eventDetails'])->name('events.details');
 });
 
 require __DIR__ . '/auth.php';

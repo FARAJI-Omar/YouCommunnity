@@ -1,66 +1,53 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Events') }}
         </h2>
     </x-slot>
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900">
-                    <!-- Optionally include a Create Event link if needed -->
-                    {{-- <a class="text-blue-500 hover:underline" href="{{ route('events.create') }}">Create Event</a> --}}
-                    <!-- ...existing events loop... -->
-                    @foreach ($events as $event)
-                    <div class="mt-6 p-4 border-b">
-                        <h3 class="text-xl font-bold">{{ $event->title }}</h3>
-                        <p>{{ $event->description }}</p>
-                        <p class="text-sm text-gray-600">{{ $event->location }} | {{ $event->event_date }}</p>
+    <div style="display: flex; gap: 90px; justify-content: center; flex-wrap: wrap; padding: 20px; margin-top: 60px">
+        @foreach ($events as $event)
 
-                        <!-- RSVP Button Logic -->
-                        @if ($event->rsvps()->where('user_id', auth()->id())->exists())
-                        <form action="{{ route('rsvp.destroy', $event->id) }}" method="POST" class="mt-2">
-                            @csrf
-                            @method('DELETE')
-                            <button type="submit" class="px-4 py-2 bg-red-500 text-white rounded">Cancel RSVP</button>
-                        </form>
-                        @else
-                        <form action="{{ route('rsvp.store', $event->id) }}" method="POST" class="mt-2">
-                            @csrf
-                            <button type="submit" class="px-4 py-2 bg-green-500 text-white rounded">RSVP</button>
-                        </form>
-                        @endif
+        <!-- Event Card 1 -->
+        <a href="{{ route('events.details', $event->id) }}">
+            <div style="width: 400px; background-color: white; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); overflow: hidden;">
+                <!-- Div 1: Image of the event -->
+                <div style="position: relative;">
+                    <img src="{{ asset('images/event-image.jpg')}}" alt="Event Image" style="width: 100%; height: 150px; object-fit: cover;">
+                </div>
 
-                        <!-- Display Comments -->
-                        <h4 class="mt-4 font-semibold">Comments</h4>
-                        @foreach ($event->comments as $comment)
-                        <div class="pl-4 border-l mt-2">
-                            <p>{{ $comment->content }} - <strong>{{ $comment->user->name }}</strong></p>
-                            @if ($comment->user_id === auth()->id())
-                            <!-- Delete Comment Form -->
-                            <form action="{{ route('comments.destroy', $comment->id) }}" method="POST" class="mt-1">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="text-red-500 hover:text-red-700 px-2" style="color: red;">Delete</button>
-                            </form>
-                            @endif
+                <!-- Div 2: Event details -->
+                <div style="padding: 16px;">
+                    <div style="display: flex;">
+                        <!-- Left div: Date of event -->
+                        <div style="width: 25%; text-align: center; background-color: #f3f4f6; padding: 8px; border-radius: 8px;">
+                            <p style="font-size: 18px; font-weight: bold; color: #3b82f6;">{{ \Carbon\Carbon::parse($event->event_date)->format('M d') }}</p>
+                            <p style="font-size: 14px; color: #6b7280;">{{ \Carbon\Carbon::parse($event->event_date)->format('H:i') }}</p>
                         </div>
-                        @endforeach
 
-                        <!-- Add New Comment Form -->
-                        <form action="{{ route('comments.store', $event->id) }}" method="POST" class="mt-4">
-                            @csrf
-                            <textarea name="content" placeholder="Add a comment" required class="w-full p-2 border rounded"></textarea>
-                            <button type="submit" class="mt-2 px-4 py-2 bg-blue-500 text-black rounded ">Submit Comment</button>
-                        </form>
-                    </div>
-                    @endforeach
-                    <div class="mt-6">
-                        {{ $events->links() }}
+                        <!-- Right div: Event info -->
+                        <div style="width: 75%; padding-left: 16px;">
+                            <h3 style="font-size: 20px; font-weight: bold; color: #374151;">{{$event->title}}</h3>
+                            <p style="font-size: 14px; color: #6b7280; margin-top: 8px;"><b>Location</b>: {{$event->location}}</p>
+                            <p style="font-size: 14px; color: #6b7280; margin-top: 4px;"><b>Category:</b> Social</p>
+                            <p style="font-size: 14px; color: #6b7280; margin-top: 4px;"><b>Max Participants:</b> {{$event->max_participants}}</p>
+                            <p style="font-size: 12px; color: #6b7280; margin-top: 4px;">Created by: {{$event->user->name}}</p>
+                        </div>
                     </div>
                 </div>
+
+                <!-- Div 3: Participate button -->
+                <div style="padding: 16px;">
+                    <button style="width: 100%; background-color: #3b82f6; color: white; padding: 12px; border-radius: 8px; border: none; cursor: pointer; font-size: 16px;">
+                        Participate
+                    </button>
+                </div>
             </div>
-        </div>
+        </a>
+        @endforeach
     </div>
+    <div style="justify-self: center; margin: 30px 0 100px;">
+        {{ $events->links() }}
+    </div>
+    @include('layouts.footer')
+
 </x-app-layout>
