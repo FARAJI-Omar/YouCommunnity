@@ -14,7 +14,7 @@
             </div>
 
             <p style="color: #777; font-size: 12px; margin-bottom: 20px;">Created on: {{ \Carbon\Carbon::parse($event->created_at)->format('d-m-y') }}</p>
-            <h2 style="margin-bottom: 20px; font-size: 60px; color: #5d66a6">{{$event->title}}</h2>
+            <h2 style="margin-bottom: 20px; font-size: 60px; color: #d1410c">{{$event->title}}</h2>
             <p style="margin-bottom: 20px;">
                 <i class="fas fa-map-marker-alt" style="color: #555;"></i>
                 {{ \Carbon\Carbon::parse($event->event_date)->format('Y-m-d H:i') }}
@@ -53,13 +53,13 @@
             </form>
         </div>
 
-        <div style="position: absolute; top: 650px; right: 150px; display: flex; flex-direction: column; gap: 10px">
+        <div style="position: absolute; top: 700px; right: 150px; display: flex; flex-direction: column; gap: 10px">
             @if($event->rsvps()->where('user_id', auth()->id())->exists())
             <!-- Cancel Reservation Form -->
             <form action="{{ route('rsvp.destroy', $event->id) }}" method="POST">
                 @csrf
                 @method('DELETE')
-                <button type="submit" style="background-color: white; border: 2px solid #7b85cf; padding: 10px 50px; border-radius: 5px; font-size: 15px; color: #7b85cf">
+                <button type="submit" style="background-color: white; border: 2px solid #d1410c; padding: 10px 50px; border-radius: 5px; font-size: 15px; color: #d1410c; font-weight: bold">
                     Cancel Reservation
                 </button>
             </form>
@@ -67,12 +67,12 @@
             <!-- Book Now Form -->
             <form action="{{ route('rsvp.store', $event->id) }}" method="POST">
                 @csrf
-                <button type="submit" style="background-color: #7b85cfad; padding: 10px 50px; border-radius: 5px; font-size: 20px; color: white">
+                <button type="submit" style="background-color: #d1410c; padding: 10px 50px; border-radius: 5px; font-size: 20px; color: white">
                     Book now
                 </button>
             </form>
             @endif
-              <button style="background-color: white; border: 2px solid #7b85cf; padding: 10px 50px; border-radius: 5px; font-size: 15px; color: #7b85cf">
+              <button style="background-color: white; border: 2px solid #d1410c; padding: 10px 50px; border-radius: 5px; font-size: 15px; color: #d1410c; font-weight: bold">
                     Contact
             </button>
         </div>

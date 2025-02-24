@@ -12,7 +12,7 @@ class EventController extends Controller
     public function index()
     {
         // Fetch events with pagination (6 per page)
-        $events = Event::paginate(9);
+        $events = Event::paginate(6);
         return view('events.index', compact('events'));
     }
 

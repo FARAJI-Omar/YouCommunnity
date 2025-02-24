@@ -1,5 +1,5 @@
 <div style="height: 200px; background-color: #f3f4f6"></div>
-<footer style="background-color: #7b85cf; color: white; padding: 40px 20px; font-family: Arial, sans-serif;">
+<footer style="background-color: #d1410c; color: white; padding: 40px 20px; font-family: Arial, sans-serif;">
     <div style="max-width: 1200px; margin: auto; display: flex; flex-wrap: wrap; justify-content: space-between;">
         
         <!-- Company Section -->
@@ -42,7 +42,7 @@
             <div style="display: flex; margin-top: 10px;">
                 <input type="email" placeholder="Enter your email" 
                     style="padding: 10px; border: none; border-radius: 5px 0 0 5px; width: 200px;">
-                <button style="background-color: #2b3370; color: white; padding: 10px; border: none; border-radius: 0 5px 5px 0; cursor: pointer;">Subscribe</button>
+                <button style="background-color: #7b85cf; color: white; padding: 10px; border: none; border-radius: 0 5px 5px 0; cursor: pointer;">Subscribe</button>
             </div>
         </div>
     </div>

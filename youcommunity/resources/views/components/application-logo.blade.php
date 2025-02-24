@@ -1,1 +1,1 @@
-<img src="{{ asset('images/logo ucommunity.png') }}" alt="Website Logo" class="h-16 w-40">
+<img src="{{ asset('images/newlogo.png') }}" alt="Website Logo" style="width: 110px; height: 58px">

@@ -6,7 +6,6 @@ use App\Http\Controllers\RSVPController;
 use App\Http\Controllers\CommentController;
 use Illuminate\Support\Facades\Route;
 
-// Updated route to ensure $events is passed to the dashboard view
 Route::get('/', [EventController::class, 'homePageEvents']);
 
 Route::get('/dashboard', [EventController::class, 'homePageEvents'])->middleware(['auth', 'verified'])->name('dashboard');

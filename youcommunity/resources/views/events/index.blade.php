@@ -9,7 +9,7 @@
 
         <!-- Event Card 1 -->
         <a href="{{ route('events.details', $event->id) }}">
-            <div style="width: 400px; background-color: white; border-radius: 8px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); overflow: hidden;">
+            <div style="width: 400px; background-color: white; border-radius: 8px; box-shadow: 0 4px 6px #7b85cf90; overflow: hidden;">
                 <!-- Div 1: Image of the event -->
                 <div style="position: relative;">
                     <img src="{{ asset('images/event-image.jpg')}}" alt="Event Image" style="width: 100%; height: 150px; object-fit: cover;">
@@ -19,7 +19,7 @@
                 <div style="padding: 16px;">
                     <div style="display: flex;">
                         <!-- Left div: Date of event -->
-                        <div style="width: 25%; text-align: center; background-color: #f3f4f6; padding: 8px; border-radius: 8px;">
+                        <div style="width: 25%; text-align: center; background-color: #7b85cf50; padding: 8px; border-radius: 8px;">
                             <p style="font-size: 18px; font-weight: bold; color: #3b82f6;">{{ \Carbon\Carbon::parse($event->event_date)->format('M d') }}</p>
                             <p style="font-size: 14px; color: #6b7280;">{{ \Carbon\Carbon::parse($event->event_date)->format('H:i') }}</p>
                         </div>
@@ -37,9 +37,24 @@
 
                 <!-- Div 3: Participate button -->
                 <div style="padding: 16px;">
-                    <button style="width: 100%; background-color: #7b85cfad; color: white; padding: 12px; border-radius: 8px; border: none; cursor: pointer; font-size: 16px;">
-                        Participate in this event
-                    </button>
+                    @if($event->rsvps()->where('user_id', auth()->id())->exists())
+                    <!-- Cancel Reservation Form -->
+                    <form action="{{ route('rsvp.destroy', $event->id) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button style="width: 100%; color: #7b85cf; border: #d1410c solid 2px; padding: 12px; border-radius: 8px; cursor: pointer; font-size: 16px;">
+                            Cancel Reservation
+                        </button>
+                    </form>
+                    @else
+                    <!-- Book Now Form -->
+                    <form action="{{ route('rsvp.store', $event->id) }}" method="POST">
+                        @csrf
+                        <button style="width: 100%; background-color: #7b85cf; color: white; padding: 12px; border-radius: 8px; border: #d1410c solid 2px; cursor: pointer; font-size: 16px;">
+                            Participate in this event
+                        </button>
+                    </form>
+                    @endif
                 </div>
             </div>
         </a>
