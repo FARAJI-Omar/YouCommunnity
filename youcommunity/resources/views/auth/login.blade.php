@@ -39,12 +39,12 @@
                 </a>
             @endif
 
-            <x-primary-button class="ms-3">
+            <x-primary-button class="ms-3" style="background-color: #d1410c">
                 {{ __('Log in') }}
             </x-primary-button>
         </div>
-            <div style="color: gray">
-                <a href="{{'register'}}">Register</a>
-            </div>
+        <div style="color: gray">
+            <a href="{{'register'}}">Register</a>
+        </div>
     </form>
 </x-guest-layout>
