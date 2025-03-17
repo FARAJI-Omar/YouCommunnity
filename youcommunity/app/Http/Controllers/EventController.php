@@ -8,17 +8,20 @@ use App\Models\User;
 
 class EventController extends Controller
 {
+    public function welcome(){
+        $events = Event::orderBy('created_at', 'desc')->get();
+        return view('welcome', compact('events'));
+    }
 
     public function index()
     {
-        // Fetch events with pagination (6 per page)
-        $events = Event::paginate(6);
+        $events = Event::orderBy('created_at', 'desc')->paginate(9);
         return view('events.index', compact('events'));
     }
 
     public function homePageEvents()
     {
-        $events = Event::all();
+        $events = Event::orderBy('created_at', 'desc')->get();
         return view('dashboard', compact('events'));
     }
 
@@ -34,7 +37,6 @@ class EventController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'required|string',
             'location' => 'required|string',
-            'category'=> 'required|string',
             'event_date' => 'required|date',
             'max_participants' => 'required|integer',
         ]);
@@ -44,7 +46,6 @@ class EventController extends Controller
             'title' => $request->title,
             'description' => $request->description,
             'location' => $request->location,
-            'category' => $request->category,
             'event_date' => $request->event_date,
             'max_participants' => $request->max_participants,
             'user_id' => auth()->id(), // Associate event with the currently logged-in user
@@ -53,38 +54,51 @@ class EventController extends Controller
         return redirect()->route('events.index');
     }
 
+
+
     public function show(Event $event)
     {
-        //
+        return view('events.EventDetails', compact('event'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
+
     public function edit(Event $event)
     {
-        //
+        // Ensure the logged-in user is the owner of the event
+        if ($event->user_id !== auth()->id()) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        return view('events.edit', compact('event'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
+
     public function update(Request $request, Event $event)
     {
-        //
+        $request->validate([
+            'title' => 'required|string|max:255',
+            'description' => 'required|string',
+            'location' => 'required|string',
+            'event_date' => 'required|date',
+            'max_participants' => 'required|integer',
+        ]);
+
+        if ($event->user_id !== auth()->id()) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $event->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'location' => $request->location,
+            'event_date' => $request->event_date,
+            'max_participants' => $request->max_participants,
+        ]);
+
+        return redirect()->route('events.my')->with('status', 'Event updated successfully.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Event $event)
-    {
-        //
-    }
 
-    /**
-     * Custom method to delete an event from My Events.
-     */
     public function destroyMy(Event $event)
     {
         // Ensure the logged-in user is the owner
@@ -99,14 +113,7 @@ class EventController extends Controller
     // New method to display events created by the logged-in user
     public function myEvents()
     {
-        $events = Event::where('user_id', auth()->id())->get();
+        $events = Event::where('user_id', auth()->id())->paginate(8);
         return view('events.my.index', compact('events'));
-    }
-
-    // New method for event details accepting the event id as parameter
-    public function eventDetails($id)
-    {
-        $event = Event::findOrFail($id);
-        return view('events.EventDetails', compact('event'));
     }
 }
