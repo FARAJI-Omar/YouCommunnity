@@ -4,17 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Comment; // Add Comment import
+use App\Models\Comment;
+use App\Models\RSVP;
+use App\Models\User;
+
 
 class Event extends Model
 {
-    use HasFactory;
-
-    public function rsvps()
-    {
-        return $this->hasMany(Rsvp::class);
-    }
-
     // Define the fillable properties so we can mass assign them
     protected $fillable = [
         'title',
@@ -26,13 +22,22 @@ class Event extends Model
         'user_id',
     ];
 
+    use HasFactory;
+
+    // Define the relationship with the RSVP model (each event has many rsvps)
+    public function rsvps()
+    {
+        return $this->hasMany(RSVP::class);
+    }
+
+
     // Define the relationship with the User model (each event belongs to a user)
     public function user()
     {
         return $this->belongsTo(User::class);
     }
 
-    // Added relationship for comments
+    // Define relationship with Comments model (each event has many comments) 
     public function comments()
     {
         return $this->hasMany(Comment::class);
